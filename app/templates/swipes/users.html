@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+  <table class="table table-bordered table-hover table-dark">
+    <thead>
+      <tr>
+	<th scope="col">Username</th>
+	<th scope="col">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+	<tr
+	  {% if u != current_user %}
+	    onclick='location.href="{{ url_for('swipes.matches', userid=u.id) }}"'
+	  {% endif %}
+	  >
+	  <td>
+	    {{ u.username }}
+	  </td>
+	  <td>
+	    {{ u.firstname }} {{ u.lastname }}
+	  </td>
+	</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

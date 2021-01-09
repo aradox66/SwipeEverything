@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+  <table class="table table-striped table-bordered">
+    <thead class="thead-light">
+      <tr>
+	<th scope="col">Filename</th>
+	<th scope="col">Campaign</th>
+	<th scope="col">Uploaded At</th>
+	<th scope="col">Uploaded By</th>
+	<th scope="col">Status</th>
+	<th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for l in lists %}
+	<tr>
+	  <td>{{ l['fname'] }}</td>
+	  <td>{{ l['campaign'] }}</td>
+	  <td>{{ l['id'] | convert_ctime }}</td>
+	  <td>{{ l['user'] }}</td>
+	  <td>{{ l['status'] }}</td>
+	  <td></td>
+	</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

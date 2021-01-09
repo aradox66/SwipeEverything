@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% from 'macros.html' import quickform with context %}
+
+{% block page_content %}
+  {{ quickform(form, ['description', 'vendorquery', 'campaign', 'listfile', 'ftimestamp', 'source']) }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+function getLastModified() {
+    lastmodified = this.files[0].lastModified; // timestamp in milliseconds
+    lastmodinp = document.getElementsByClassName("ftimestamp")[0];
+    lastmodinp.value = lastmodified/1000; // converts to seconds
+}
+
+function checkedOptional() {
+    if (this.value == "None") {
+	this.addEventListener("change", uncheckedOptional);
+	this.removeEventListener("change", checkedOptional);
+	this.classList.remove("source");
+	this.removeAttribute("id");
+	this.removeAttribute("name");
+	inp = document.createElement("input");
+	inp.id = "source";
+	inp.name = "source";
+	inp.classList.add("form-control", "source", "p-2");
+	this.parentElement.appendChild(inp);
+    }
+}
+
+function uncheckedOptional() {
+    document.getElementsByClassName("source")[0].remove();
+    this.removeEventListener("change", uncheckedOptional);
+    this.addEventListener("change", checkedOptional);
+    this.classList.add("source");
+    this.id = "source";
+    this.name = "source";
+}
+
+sourcer = document.getElementsByClassName("source")[0];
+sourcer.addEventListener("change", checkedOptional);
+
+document.getElementsByClassName("ftimestamp")[0].parentElement.parentElement.parentElement.hidden = true;
+listfileinput = document.getElementsByClassName("listfile")[0];
+listfileinput.addEventListener("change", getLastModified);
+
+</script>
+{% endblock %}

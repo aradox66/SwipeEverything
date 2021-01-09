@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+<h1>Manage Users</h1>
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Permissions</th>
+    <th>Actions</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.firstname }} {{ user.lastname }}</td>
+    <td>{{ user.email }}</td>
+    <td>{% if user.admin %}admin
+      {% elif user.password_hold != None %}account requested
+      {% elif user.retired %}retired
+      {% else %}user{% endif %}</td>
+    <td>
+      {% if user != current_user %}
+      <form action='' method='post'>
+	{{ user.manage_form.hidden_tag() }}
+	{% if user.retired == True %}{{ user.manage_form.action3_() }}
+	{% elif user.admin == True %}{{ user.manage_form.action2_() }}
+	{% elif user.password_hold != None %}
+	    Approve: {{ user.manage_form.approve() }}
+	{% else %} {{ user.manage_form.action_() }} {% endif %}
+	{% for error in user.manage_form.action_.errors %}
+	{{ error }}
+	{% endfor %}
+	{{ user.manage_form.submit_() }}
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

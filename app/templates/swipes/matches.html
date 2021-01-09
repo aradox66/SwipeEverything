@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+  <table class="table table-bordered table-hover table-dark">
+    <thead>
+      <tr>
+	<th scope="col">Thing</th>
+	<th scope="col">Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in things %}
+	<tr {% if t.link %}onclick='location.href="{{ t.link }}"'{% endif %}>
+	  <td>
+	    {{ t.title }}
+	  </td>
+	  <td>
+	    {{ t.category.title }}
+	  </td>
+	</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

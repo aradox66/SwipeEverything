@@ -1,0 +1,25 @@
+{% macro quickform(form, formfields) -%}
+  <form class="form" method="post" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    {% for field in formfields %}
+      <div class="form-group">
+	<div class="d-flex">
+	  <div class="col-sm-2 col-form-label">
+	    {{ form[field].label }}
+	  </div>
+	  <div class="col-sm-10">
+	    {{ form[field](class_="form-control " + form[field].id|string) }}
+	  </div>
+	  {% if form[field].errors %}
+	    {% for error in form[field].errors %}
+	      <div class="border border-warning text-danger col-sm-5 offset-sm-12">
+		{{ error }}
+	      </div>
+	    {% endfor %}
+	  {% endif %}
+	</div>
+      </div>
+    {% endfor %}
+    {{ form.submit(class_="btn btn-primary") }}
+  </form>
+{%- endmacro %}

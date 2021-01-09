@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+  Thing: {{ thing.title }}<br>
+  {% if thing.category %}
+    Category: {{ thing.category.title }}<br>
+  {% endif %}
+  {% if thing.img %}
+    <img src="{{ thing.img }}" height=300 width=300><br>
+  {% endif %}
+  {% if thing.description %}
+    Description: {{ thing.description }}<br>
+  {% endif %}
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.value() }}<br>
+    {{ form.submit }}
+  </form>
+{% endblock %}
